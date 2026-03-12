@@ -6,4 +6,4 @@ groq
 numpy
 pandas
 tqdm
-python-dotenv   
+python-dotenv
