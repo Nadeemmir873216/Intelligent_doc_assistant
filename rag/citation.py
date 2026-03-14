@@ -1,4 +1,4 @@
-def format_source(chunks):
+def format_sources(chunks):
     sources = set()
     for c in chunks:
         sources.add(f"{c['source']} (page {c['page']})")
