@@ -8,6 +8,13 @@ sys.path.append(str(Path(__file__).resolve().parents[1]))
 #streamlit code starts here
 
 import streamlit as st
+import os
+
+if "vector_store" not in st.session_state:
+    st.session_state.vector_store = None
+
+if "retriever" not in st.session_state:
+    st.session_state.retriever = None
 
 from rag.ingest import load_pdf
 from rag.chunking import chunk_documents
@@ -23,11 +30,14 @@ uploaded_files = st.file_uploader("Upload a PDF", type="pdf", accept_multiple_fi
 
 question = st.text_input("Ask a question about the document")
 
-if uploaded_files and question:
+if uploaded_files and st.session_state.vector_store is None:
 
     all_docs = []
 
     for uploaded_file in uploaded_files:
+        file_path = f"data/uploads/{uploaded_file.name}"
+        if os.path.exists(file_path):
+            os.remove(file_path)
 
         file_path = uploaded_file.name
 
@@ -51,6 +61,14 @@ if uploaded_files and question:
     vector_store.add(embeddings, chunks)
 
     retriever = Retriever(embedder, vector_store)
+
+    st.session_state.vector_store = vector_store
+
+    st.session_state.retriever = retriever
+
+if question and st.session_state.retriever:
+
+    retriever = st.session_state.retriever
 
     generator = Generator()
 
