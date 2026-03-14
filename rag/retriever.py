@@ -3,7 +3,7 @@ class Retriever:
         self.embedder = embedder
         self.vector_store = vector_store
     
-    def retrieve(self, question, k=5):
+    def retrieve(self, question, k=10):
         query_embedding = self.embedder.embed([question])[0]
         results = self.vector_store.search(query_embedding,k)
         return results
