@@ -7,7 +7,7 @@ load_dotenv()
 class Generator:
     def __init__(self):
         self.client = Groq(api_key=os.getenv("GROQ_API_KEY"))
-        self.model = "groq/compound-mini"
+        self.model = "openai/gpt-oss-20b"
 
     def generate(self, question , chunks):
         context = "\n\n".join([c["text"] for c in chunks ])
