@@ -16,6 +16,9 @@ if "vector_store" not in st.session_state:
 if "retriever" not in st.session_state:
     st.session_state.retriever = None
 
+if "uploaded_file_names" not in st.session_state:
+    st.session_state.uploaded_file_names = []
+
 from rag.ingest import load_pdf
 from rag.chunking import chunk_documents
 from rag.embeddings import EmbeddingModel
@@ -27,6 +30,17 @@ from rag.citation import format_sources
 st.title("Intelligent Document Assistant")
 
 uploaded_files = st.file_uploader("Upload a PDF", type="pdf", accept_multiple_files=True)
+
+current_file_names = [f.name for f in uploaded_files] if uploaded_files else []
+
+if current_file_names != st.session_state.uploaded_file_names:
+
+    # reset system
+    st.session_state.vector_store = None
+    st.session_state.retriever = None
+
+    st.session_state.uploaded_file_names = current_file_names
+
 
 question = st.text_input("Ask a question about the document")
 
