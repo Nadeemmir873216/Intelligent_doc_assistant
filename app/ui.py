@@ -35,9 +35,11 @@ if uploaded_files and st.session_state.vector_store is None:
     all_docs = []
 
     for uploaded_file in uploaded_files:
+
+        # removal of files after creation
         file_path = f"data/uploads/{uploaded_file.name}"
-        if os.path.exists(file_path):
-            os.remove(file_path)
+        
+        #
 
         file_path = uploaded_file.name
 
@@ -47,6 +49,11 @@ if uploaded_files and st.session_state.vector_store is None:
         docs = load_pdf(file_path)
 
         all_docs.extend(docs)
+
+        # removal ___
+        if os.path.exists(file_path):
+            os.remove(file_path)
+        #
 
     chunks = chunk_documents(all_docs)
 
