@@ -12,18 +12,21 @@ class Generator:
     def generate(self, question , chunks):
         context = "\n\n".join([c["text"] for c in chunks ])
         prompt = f"""
-        You are a helpful assistant.
+            You are a document question-answering assistant.
 
-        Answer the question ONLY using the provided context.
+            Use ONLY the information from the provided context to answer the question.
 
-        Context:
-        {context}
+            If the answer is not contained in the context, respond with:
+            "I could not find the answer in the provided documents."
 
-        Question:
-        {question}
+            Context:
+            {context}
 
-        Answer clearly and concisely.
-        """
+            Question:
+            {question}
+
+            Answer clearly and concisely.
+            """
 
         completion = self.client.chat.completions.create(
             model=self.model,
