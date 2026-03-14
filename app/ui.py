@@ -19,18 +19,26 @@ from rag.citation import format_sources
 
 st.title("Intelligent Document Assistant")
 
-uploaded_file = st.file_uploader("Upload a PDF", type="pdf")
+uploaded_files = st.file_uploader("Upload a PDF", type="pdf", accept_multiple_files=True)
 
 question = st.text_input("Ask a question about the document")
 
-if uploaded_file and question:
+if uploaded_files and question:
 
-    with open("temp.pdf", "wb") as f:
-        f.write(uploaded_file.read())
+    all_docs = []
 
-    docs = load_pdf("temp.pdf")
+    for uploaded_file in uploaded_files:
 
-    chunks = chunk_documents(docs)
+        file_path = uploaded_file.name
+
+        with open(file_path, "wb") as f:
+            f.write(uploaded_file.read())
+
+        docs = load_pdf(file_path)
+
+        all_docs.extend(docs)
+
+    chunks = chunk_documents(all_docs)
 
     embedder = EmbeddingModel()
 
