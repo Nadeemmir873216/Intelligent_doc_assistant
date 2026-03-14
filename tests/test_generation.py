@@ -24,7 +24,7 @@ retriever = Retriever(embedder, vector_store)
 
 generator = Generator()
 
-question = "can you provide me the links provided in the document and tell me about those too?"
+question = "What is this about?"
 
 retrieved_chunks = retriever.retrieve(question)
 
