@@ -1,4 +1,4 @@
-def chunk_documents(documents, chunk_size=1000, overlap=200):
+def chunk_documents(documents, chunk_size=500, overlap=100):
     chunks = []
     for doc in documents:
         words = doc["text"].split()
