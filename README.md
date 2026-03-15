@@ -1,16 +1,3 @@
----
-
-title: RAG Document Assistant
-emoji: 📄
-colorFrom: blue
-colorTo: indigo
-sdk: streamlit
-sdk_version: "1.32.0"
-python_version: "3.10"
-app_file: app.py
-pinned: false
--------------
-
 # 📄 Intelligent Document Assistant (RAG)
 
 An AI-powered **Retrieval-Augmented Generation (RAG)** system that allows users to upload PDFs and ask questions about them.
